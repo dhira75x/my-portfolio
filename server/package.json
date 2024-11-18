@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon server.js"
   },
-  "author": "RyukShi <aure16300P@gmail.com>",
+  "author": "Phareedah <fariffarida@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
