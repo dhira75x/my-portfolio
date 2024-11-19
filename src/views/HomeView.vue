@@ -13,7 +13,17 @@ const mainStore = useMainStore();
     <ChooseLanguage />
 
     <h2 class="sub-title">
-      * {{ mainStore.language === "en" ? "About me" : "À propos de moi" }} *
+      *
+      {{
+        mainStore.language === "en"
+          ? "About me"
+          : mainStore.language === "fr"
+          ? "À propos de moi"
+          : mainStore.language === "kr"
+          ? "Jeo-e daehae"
+          : ""
+      }}
+      *
     </h2>
 
     <div v-if="mainStore.language === 'en'" class="text-justify">
@@ -39,16 +49,6 @@ const mainStore = useMainStore();
         useful to a wide audience, contributing to society by making technology
         more accessible and engaging for everyone.
       </p>
-      <!-- <p class="mt-4">
-        I'm currently working on my personal projects, which you can discover by
-        visiting the projects page.
-      </p>
-      <p class="mt-4">
-        I'm currently looking for a full-time position in web development, where
-        I can use my skills and knowledge to create amazing things. If you're
-        interested in working with me, please feel free to reach out. I'm always
-        happy to discuss potential projects and opportunities.
-      </p> -->
     </div>
     <div v-else-if="mainStore.language === 'fr'" class="text-justify">
       <p>
@@ -75,16 +75,6 @@ const mainStore = useMainStore();
         solutions qui sont utile à un large public, contribuant à la société en
         rendant la technologie plus accessible et engageant pour tout le monde.
       </p>
-      <!-- <p class="mt-4">
-        Je travaille actuellement sur mes projets personnels, que vous pouvez
-        découvrir en visitant la page des projets.
-      </p>
-      <p class="mt-4">
-        Je suis actuellement à la recherche d'un poste à temps plein en tant que
-        développeur web junior. Si mon profile vous intéresse, n'hésitez pas à
-        me contacter. Je suis toujours heureux de discuter de projets potentiels
-        et d'opportunités.
-      </p> -->
     </div>
     <div v-else class="text-justify">
       <p>
@@ -113,16 +103,6 @@ const mainStore = useMainStore();
         yuyonghamyeo, gisul-eul mandeul-eo sahoee gongheonhabnida. modeun
         salam-i deo swibge jeobgeunhago cham-yeohal su issseubnida.
       </p>
-      <!-- <p class="mt-4">
-        Je travaille actuellement sur mes projets personnels, que vous pouvez
-        découvrir en visitant la page des projets.
-      </p>
-      <p class="mt-4">
-        Je suis actuellement à la recherche d'un poste à temps plein en tant que
-        développeur web junior. Si mon profile vous intéresse, n'hésitez pas à
-        me contacter. Je suis toujours heureux de discuter de projets potentiels
-        et d'opportunités.
-      </p> -->
     </div>
 
     <div class="text-center text-xl text-indigo-500 mt-10">
@@ -140,9 +120,22 @@ const mainStore = useMainStore();
 
     <div class="my-10 centered">
       <a
+        v-if="mainStore.language === 'en'"
         class="btn-lg btn-amber hover:-translate-y-1"
         href="mailto:fariffarida@gmail.com"
         >Contact me!</a
+      >
+      <a
+        v-else-if="mainStore.language === 'fr'"
+        class="btn-lg btn-amber hover:-translate-y-1"
+        href="mailto:fariffarida@gmail.com"
+        >Contactez-moi</a
+      >
+      <a
+        v-else
+        class="btn-lg btn-amber hover:-translate-y-1"
+        href="mailto:fariffarida@gmail.com"
+        >Kontakt haji!</a
       >
     </div>
 
@@ -152,8 +145,15 @@ const mainStore = useMainStore();
       >
         <div>
           <p class="font-bold text-2xl">CV Frond-End Developer</p>
-          <p class="mt-2">
+          <p class="mt-2" v-if="mainStore.language === 'en'">
             Need to know more about my background, download my CV.
+          </p>
+          <p class="mt-2" v-else-if="mainStore.language === 'fr'">
+            Vous souhaitez en savoir plus sur mon parcours, téléchargez mon CV.
+          </p>
+          <p class="mt-2" v-else>
+            Nae baegyeonge daehae deo algo sipdamyeon, nae iryeokseoreul dawonro
+            haseyo
           </p>
         </div>
         <a
@@ -174,11 +174,18 @@ const mainStore = useMainStore();
         <strong class="text-indigo-500">"help"</strong> command in order to
         obtain the available commands.
       </p>
-      <p v-else>
+      <p v-else-if="mainStore.language === 'fr'">
         Mon idée était de créer une interface de type terminal pour montrer mes
         compétences. Il y a quelques surprises, essayez de les trouver! Exécuter
         la commande <strong class="text-indigo-500">"help"</strong> afin
         d'obtenir les commandes disponibles.
+      </p>
+      <p v-else>
+        Jeoneun jeonhwan-ui cheonggyeo hyeonsil-gwa gachi jeongbo-reul pyeonhi
+        hwaldong hal su itge haessseubnida. Eotteohge geuliseo gieok-eul bomyeo
+        hamkke geuliseo ttala dadeul-eul chajseubnida!
+        <strong class="text-indigo-500">"help"</strong> wa gamyeon eotteohge
+        naeil-eul bol su issnayo.
       </p>
       <div class="centered mt-10">
         <UbuntuTerminal />
