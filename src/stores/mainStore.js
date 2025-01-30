@@ -18,7 +18,6 @@ export const useMainStore = defineStore("main_store", () => {
       technologies: [
         "Laravel",
         "Vue Js",
-        "PHP 8.1",
         "JavaScript",
         "Tailwind CSS",
         "PostgreSQL",
@@ -123,6 +122,12 @@ export const useMainStore = defineStore("main_store", () => {
         { name: "React.js", fileName: "react-js.svg" },
         { name: "Vue.js", fileName: "vue-js.svg" },
         { name: "Symfony", fileName: "symfony.svg" },
+      ],
+      ui: [
+        { name: "figma", fileName: "figma.svg" },
+        { name: "canva", fileName: "canva.svg" },
+        { name: "adobe photoshop", fileName: "photoshop.svg" },
+        { name: "blender", fileName: "blender.svg" },
       ],
       cssFrameworks: [
         { name: "Tailwind CSS", fileName: "tailwind-css.svg" },

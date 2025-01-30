@@ -113,6 +113,18 @@ const language = mainStore.language;
       </div>
     </div>
 
+    <h3 class="text-xl">UI/UX</h3>
+    <div class="custom-grid">
+      <div v-for="s in skills.hardSkills.ui" :key="s.name" class="skill-card">
+        <img
+          class="mx-auto w-1/4"
+          :src="`./svg/${s.fileName}`"
+          :alt="`${s.name} logo`"
+        />
+        <p class="text-center text-lg mt-4">{{ s.name }}</p>
+      </div>
+    </div>
+
     <h2 class="sub-title">* Soft Skills *</h2>
     <div class="custom-grid">
       <div
