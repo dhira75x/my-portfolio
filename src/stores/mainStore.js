@@ -24,7 +24,7 @@ export const useMainStore = defineStore("main_store", () => {
         "Webpack",
       ],
       githubUrl: "https://github.com/dhira75x/recipe-paradise",
-      website: "",
+      website: "https://my-recipe-nine-blond.vercel.app",
     },
     // {
     //   id: 2,
