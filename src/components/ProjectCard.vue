@@ -32,7 +32,7 @@ defineProps({
       <div class="flex flex-row">
         <!-- noopener noreferrer, for security reasons. -->
         <a class="btn btn-amber mt-4 mr-4" role="button" :href="project.githubUrl" target="_blank" rel="noopener noreferrer">View on GitHub</a>
-        <a v-if="project?.website" class="btn btn-amber mt-4" role="button" :href="project?.website" target="_blank" rel="noopener noreferrer">Website</a>
+        <a class="btn btn-amber mt-4" role="button" :href="project?.website" target="_blank" rel="noopener noreferrer">Website</a>
       </div>
     </div>
 
