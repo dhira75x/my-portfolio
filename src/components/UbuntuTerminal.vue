@@ -1,6 +1,9 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from "vue";
 import GameSnake from "./GameSnake.vue";
+import GameTetris from "./GameTetris.vue";
+import GamePacman from "./GamePacman.vue";
+import Game2048 from "./Game2048.vue";
 
 let blinkIntervalId = null;
 
@@ -49,8 +52,9 @@ If you are interested in working with me or if you have any questions, feel free
 
 const allGames = `Here are the different games I have developed:
 - **snake**
-- **tetris** (Coming soon)
-- **pac-man** (Coming soon)`;
+- **tetris**
+- **pac-man**
+- **2048**`;
 
 const memes = ["./images/meme-cat-1.gif", "./images/meme-cat-2.gif"];
 
@@ -87,10 +91,16 @@ const runCommand = () => {
       gameMode.value = true;
       selectedGame.value = c;
     } else if (c === "tetris") {
-      lines.value.push({ id: lines.value.length, c: c, text: "Coming soon!" });
+      lines.value.push({ id: lines.value.length, c: c });
+      gameMode.value = true;
       selectedGame.value = c;
     } else if (c === "pac-man") {
-      lines.value.push({ id: lines.value.length, c: c, text: "Coming soon!" });
+      lines.value.push({ id: lines.value.length, c: c });
+      gameMode.value = true;
+      selectedGame.value = c;
+    } else if (c === "2048") {
+      lines.value.push({ id: lines.value.length, c: c });
+      gameMode.value = true;
       selectedGame.value = c;
     } else if (c === "games") {
       lines.value.push({ id: lines.value.length, c: c, text: allGames });
@@ -147,6 +157,18 @@ const runCommand = () => {
       <GameSnake
         @change-mode="(mode) => (gameMode = mode)"
         v-if="selectedGame === 'snake'"
+      />
+      <GameTetris
+        @change-mode="(mode) => (gameMode = mode)"
+        v-if="selectedGame === 'tetris'"
+      />
+      <GamePacman
+        @change-mode="(mode) => (gameMode = mode)"
+        v-if="selectedGame === 'pac-man'"
+      />
+      <Game2048
+        @change-mode="(mode) => (gameMode = mode)"
+        v-if="selectedGame === '2048'"
       />
     </div>
   </div>

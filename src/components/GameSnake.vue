@@ -16,6 +16,7 @@ const nickname = ref(null)
 const tutorialMode = ref(false)
 const pause = ref(true)
 const gameOver = ref(false)
+const gameWon = ref(false)
 const started = ref(false)
 const rainbowMode = ref(false)
 const loading = ref(false)
@@ -30,8 +31,8 @@ const checkFood = computed(() => {
     && snake.value.y === food.value.y
 })
 const checkWallCollisions = computed(() => {
-  return snake.value.y > canvas.height || snake.value.y < 0 ||
-    snake.value.x > canvas.width || snake.value.x < 0
+  return snake.value.y >= canvas.height || snake.value.y < 0 ||
+    snake.value.x >= canvas.width || snake.value.x < 0
 })
 const checkBodyCollisions = computed(() => {
   return snake.value.body.some(segment =>
@@ -46,7 +47,7 @@ const difficulties = [
 ]
 
 /* Global variables */
-const cellSize = 5
+const cellSize = 10
 const colors = hexaColors
 var canvas = null
 var ctx = null
@@ -83,6 +84,7 @@ const play = () => {
 
 const restart = () => {
   gameOver.value = false
+  gameWon.value = false
   score.value = 0
   snake.value = { x: 50, y: 50, length: 1, body: [] }
   direction.value = 'right'
@@ -124,6 +126,21 @@ watch(gameOver, async (isGameOver) => {
   }
 })
 
+watch(gameWon, async (isGameWon) => {
+  if (isGameWon) {
+    try {
+      loading.value = true
+      await sendUserVerificationRequest({ nickname: nickname.value, score: score.value, game: 'snake' })
+      const topPlayersResponse = await fetchTopPlayers({ game: 'snake', limit: 10 })
+      if (topPlayersResponse) topPlayers.value = topPlayersResponse
+    } catch (error) {
+      console.error(error)
+    } finally {
+      loading.value = false
+    }
+  }
+})
+
 onBeforeUnmount(() => {
   document.removeEventListener('keydown', commandsKey)
   clearInterval(moveIntervalId)
@@ -133,6 +150,11 @@ const moveSnake = () => {
   if (checkFood.value) {
     score.value += 20
     snake.value.length += 1
+    if (snake.value.length >= 50) {
+      pause.value = true
+      gameWon.value = true
+      return
+    }
     drawFood()
   }
   if (direction.value === 'right') snake.value.x += cellSize
@@ -142,6 +164,7 @@ const moveSnake = () => {
   if (checkBodyCollisions.value || checkWallCollisions.value) {
     pause.value = true
     gameOver.value = true
+    return
   }
   drawSnake()
 }
@@ -192,7 +215,7 @@ const drawFood = () => {
     </label>
     <button v-show="nickname" class="btn-lg btn-amber" @click="play">Play Now!</button>
   </div>
-  <div v-show="!gameOver && started">
+  <div v-show="!gameOver && !gameWon && started">
     <div class="text-center" v-if="!tutorialMode">
       <p class="text-2xl">Score : {{ score }}</p>
       <p class="text-amber-500" v-show="pause">PAUSE, press "P" to start!</p>
@@ -205,7 +228,7 @@ const drawFood = () => {
       <p>Press "P" to pause the game, and press again to exit pause mode.</p>
     </div>
     <div v-show="!tutorialMode" class="centered">
-      <canvas id="canvas">
+      <canvas id="canvas" width="400" height="400">
         What a shame! You can't play Snake because your browser doesn't support canvas.
       </canvas>
     </div>
@@ -223,6 +246,13 @@ const drawFood = () => {
   </div>
   <div v-if="gameOver">
     <p class="text-2xl text-center">Game Over! Your score : {{ score }} point(s)</p>
+    <div class="centered mt-4">
+      <button class="btn-lg btn-amber" @click="restart">Play again!</button>
+    </div>
+    <RankingScoreTable :loading="loading" :topPlayers="topPlayers" />
+  </div>
+  <div v-if="gameWon">
+    <p class="text-2xl text-center text-green-500">You Win! You reached length 50! Score : {{ score }} point(s)</p>
     <div class="centered mt-4">
       <button class="btn-lg btn-amber" @click="restart">Play again!</button>
     </div>
