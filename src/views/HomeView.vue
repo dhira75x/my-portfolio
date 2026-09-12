@@ -12,7 +12,7 @@ const mainStore = useMainStore();
       <h1 class="main-title">Hi there 👋, I'm Phareedah</h1>
       <div class="flex flex-row justify-end">
         <img
-          src="/profile1.jpg"
+          src="/my-picture.png"
           alt="Sample Image"
           class="rounded-full w-[50%] h-[60%] mr-5"
         />
