@@ -14,7 +14,7 @@ const mainStore = useMainStore();
         <img
           src="/my-picture.png"
           alt="Sample Image"
-          class="rounded-full mr-5 w-full h-full"
+          class="rounded-full mr-5 w-[50%] h-[50%]"
         />
       </div>
     </div>
